@@ -51,6 +51,8 @@ ruleTester.run("prefer-arrow-callback", rule, {
         {code: "foo(function() { (() => this); }.bind(this));", parserOptions: { ecmaVersion: 6 }, errors: errors},
         {code: "foo(function bar(a) { a; });", errors: errors},
         {code: "foo(function(a) { a; });", errors: errors},
-        {code: "foo(function(arguments) { arguments; });", errors: errors}
+        {code: "foo(function(arguments) { arguments; });", errors: errors},
+        {code: "foo(function() { this; });", options: [{ allowThis: false }], errors: errors},
+        {code: "foo(function() { (() => this); });", parserOptions: { ecmaVersion: 6 }, options: [{ allowThis: false }], errors: errors}
     ]
 });

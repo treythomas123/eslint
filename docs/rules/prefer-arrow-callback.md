@@ -37,6 +37,27 @@ foo(function() { return this.a; });
 foo(function bar(n) { return n && n + bar(n - 1); });
 ```
 
+## Options
+
+`prefer-arrow-callback` receives a single, optional argument which is an options object.
+
+### allowThis
+
+This defaults to `true`. When set to `false`, callbacks that use `this` without also using `bind` are not allowed. In that case, the value of `this` is not known until execution time so changing to an arrow function must be done carefully to avoid errors.
+
+The following patterns will not be considered problems
+
+```js
+/*eslint prefer-arrow-callback: [2, { allowThis: false }] */
+/*eslint-env es6*/
+
+foo(function() { this.a; });
+
+foo(function() { (() => this); });
+
+someArray.map(function (itm) { return this.doSomething(itm); }, someObject);
+```
+
 ## When Not To Use It
 
 This rule should not be used in ES3/5 environments.
